@@ -20,20 +20,46 @@ int main(int argc, const char * argv[])
 
 //	 making a Sensor_Stream object for Sensor1
 	Sensor_Stream Sensor1(Sensor_Stream::SENSOR_1);
-	
-	enum Sensor_Stream::flagState_t state = Sensor_Stream::FLAG_DATA_GOOD;
-//	std::cout << "State is " << state << "\n";
+	enum Sensor_Stream::flagState_t state1 = Sensor_Stream::FLAG_DATA_GOOD;
 
-	float x = Sensor1.get_data(&state);
-	std::cout << "The value is " << x << "\n";
+	Sensor_Stream Sensor2(Sensor_Stream::SENSOR_2);
+	enum Sensor_Stream::flagState_t state2 = Sensor_Stream::FLAG_DATA_GOOD;
 	
+	Sensor_Stream Sensor3(Sensor_Stream::SENSOR_3);
+	enum Sensor_Stream::flagState_t state3 = Sensor_Stream::FLAG_DATA_GOOD;
 	
-//	//	 testing pointers
-//	int foo = 10; // foo is the value
-//	int *pFoo;
-//	pFoo = &foo; // pFoo is the pointer to foo at address pFoo
-//
-//	std::cout << "The value of foo is: " << *pFoo << " at address: " << pFoo << "\n";
+	bool streamOk = true;
+	while (streamOk)
+	{
+		float x = Sensor1.get_data(&state1);
+		float y = Sensor2.get_data(&state2);
+		float z = Sensor3.get_data(&state3);
+		switch (state1)
+		{
+			case Sensor_Stream::FLAG_DATA_GOOD:
+				std::cout << "The values of the sensors are " << x << ",\t" << y << ",\t" << z << "\n";
+				break;
+			case 1:
+				std::cout << "Data line error \n";
+				streamOk = false;
+				break;
+			case Sensor_Stream::FLAG_DATA_FILE_END:
+				std::cout << "Reached end of data stream \n";
+				streamOk = false;
+				break;
+			case Sensor_Stream::FLAG_DATA_FILE_CLOSED:
+				std::cout << "File is closed";
+				streamOk = false;
+				break;
+		}
+		
+		
+	}
+	
+	// add a switch case statement for each sensor stream based off the flag
+	
+	// add function for conversion and scaling taking both sensor number and value as input
+	
 
 	return 0;
 }
