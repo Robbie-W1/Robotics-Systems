@@ -7,22 +7,33 @@
 //
 
 #include <iostream> // used for outputting to the console
-#include "Sensor_Stream.h" // gives us access to the classes declared in other files
+
+// Open up the other code files
+#include "Sensor_Stream.h"
 #include "Logger.h"
 #include "Control_Output.h"
-
 
 
 int main(int argc, const char * argv[])
 {
 	std::cout << "Hello, World!\n";
-	
-	
-	
-	Sensor_Stream Sensor1(Sensor_Stream::SENSOR_2);
 
+//	 making a Sensor_Stream object for Sensor1
+	Sensor_Stream Sensor1(Sensor_Stream::SENSOR_1);
 	
+	enum Sensor_Stream::flagState_t state = Sensor_Stream::FLAG_DATA_GOOD;
+//	std::cout << "State is " << state << "\n";
 
+	float x = Sensor1.get_data(&state);
+	std::cout << "The value is " << x << "\n";
 	
+	
+//	//	 testing pointers
+//	int foo = 10; // foo is the value
+//	int *pFoo;
+//	pFoo = &foo; // pFoo is the pointer to foo at address pFoo
+//
+//	std::cout << "The value of foo is: " << *pFoo << " at address: " << pFoo << "\n";
+
 	return 0;
 }
