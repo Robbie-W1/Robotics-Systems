@@ -14,7 +14,18 @@
 #include "Logger.h"
 #include "Control_Output.h"
 
-float convert_data(Sensor_Stream::sensorId_t sensor_id, float value);
+float convert_data(Sensor_Stream::sensorId_t sensor_id, float value, float previous_value = 0);
+float scale_data(Sensor_Stream::sensorId_t sensorid, float value);
+
+struct values_t {
+	float value;
+	float previous_value = 0; // we only use this for sensor 2
+	float temporary_value = 0;
+};
+values_t sensor1;
+values_t sensor2;
+values_t sensor3;
+
 
 int main(int argc, const char * argv[])
 {
@@ -30,26 +41,29 @@ int main(int argc, const char * argv[])
 	Sensor_Stream Sensor3(Sensor_Stream::SENSOR_3);
 	enum Sensor_Stream::flagState_t state3 = Sensor_Stream::FLAG_DATA_GOOD;
 
-	float x = Sensor1.get_data(&state1);
-	float y = Sensor2.get_data(&state2);
-	float z = Sensor3.get_data(&state3);
-
-//	std::cout << conver_data(Sensor_Stream::SENSOR_1, 33333) << "\n";
+	sensor1.value = Sensor1.get_data(&state1);
+	sensor2.value = Sensor2.get_data(&state2);
+	sensor3.value = Sensor3.get_data(&state3);
 	
 	bool stream_ok = true;
 	while (stream_ok)
 	{
-		x = Sensor1.get_data(&state1);
-		y = Sensor2.get_data(&state2);
-		z = Sensor3.get_data(&state3);
+		sensor1.value = Sensor1.get_data(&state1);
+		sensor2.value = Sensor2.get_data(&state2);
+		sensor3.value = Sensor3.get_data(&state3);
+		
 		switch (state1)
 		{
 			case Sensor_Stream::FLAG_DATA_GOOD: // if the data is good
-				std::cout << "The values of the sensors are " << x << ",\t" << y << ",\t" << z << "\n";
-				x = convert_data(Sensor_Stream::SENSOR_1, x);
+				std::cout << "The values of the sensors are " << sensor1.value << ",\t";
+				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
+				sensor1.value = convert_data(Sensor_Stream::SENSOR_1, sensor1.value);
+				sensor2.temporary_value = sensor2.value;
+				sensor2.value = convert_data(Sensor_Stream::SENSOR_2, sensor2.value, sensor2.previous_value);
+				sensor2.previous_value = sensor2.temporary_value;
+				sensor3.value = convert_data(Sensor_Stream::SENSOR_3, sensor3.value);
 				break;
-			// if we have errors in getting the data
-			case Sensor_Stream::FLAG_DATA_LINE_ERROR:
+			case Sensor_Stream::FLAG_DATA_LINE_ERROR: // if we have errors in getting the data
 				std::cout << "Data line error \n";
 				stream_ok = false;
 				break;
@@ -63,25 +77,42 @@ int main(int argc, const char * argv[])
 				break;
 		}
 	}
-	
-	// add function for conversion and scaling taking both sensor number and value as input
-	
 	return 0;
 }
 
-float convert_data(Sensor_Stream::sensorId_t sensor_id, float value)
+float convert_data(Sensor_Stream::sensorId_t sensor_id, float value, float previous_value)
 {
 	switch (sensor_id)
 	{
 		case Sensor_Stream::SENSOR_1:
-			value = (2/3.0) * sqrt(value);
+			value = (2.0/3.0) * sqrt(value);
 			std::cout << "The adjusted value for sensor 1 is: " << value << "\n";
 			break;
 		case Sensor_Stream::SENSOR_2:
+			value = value - previous_value;
+			std::cout << "The adjusted value for sensor 2 is: " << value << "\n";
+			break;
+		case Sensor_Stream::SENSOR_3:
+			value = value;
+			std::cout << "The adjusted value for sensor 3 is: " << value << "\n";
+			break;
+	}
+	return value;
+}
 
+float scale_data(Sensor_Stream::sensorId_t sensorid, float value)
+{
+	switch (sensorid) {
+		case Sensor_Stream::SENSOR_1:
+			
+			break;
+		case Sensor_Stream::SENSOR_2:
+			
 			break;
 		case Sensor_Stream::SENSOR_3:
 			
+			break;
+		default:
 			break;
 	}
 	return value;
