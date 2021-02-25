@@ -17,7 +17,8 @@
 float convert_data(Sensor_Stream::sensorId_t sensor_id, float value, float previous_value = 0);
 float scale_data(Sensor_Stream::sensorId_t sensorid, float value);
 
-struct values_t {
+struct values_t
+{
 	float value;
 	float previous_value = 0; // we only use this for sensor 2
 	float temporary_value = 0;
@@ -55,13 +56,20 @@ int main(int argc, const char * argv[])
 		switch (state1)
 		{
 			case Sensor_Stream::FLAG_DATA_GOOD: // if the data is good
-				std::cout << "The values of the sensors are " << sensor1.value << ",\t";
+				std::cout << "The values of the sensors are \t" << sensor1.value << ",\t";
 				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
 				sensor1.value = convert_data(Sensor_Stream::SENSOR_1, sensor1.value);
+				
 				sensor2.temporary_value = sensor2.value;
 				sensor2.value = convert_data(Sensor_Stream::SENSOR_2, sensor2.value, sensor2.previous_value);
 				sensor2.previous_value = sensor2.temporary_value;
+				
 				sensor3.value = convert_data(Sensor_Stream::SENSOR_3, sensor3.value);
+				
+				std::cout << "The adjusted values are: \t \t" << sensor1.value << "\t";
+				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
+				std::cout << "\n";
+
 				break;
 			case Sensor_Stream::FLAG_DATA_LINE_ERROR: // if we have errors in getting the data
 				std::cout << "Data line error \n";
@@ -86,15 +94,15 @@ float convert_data(Sensor_Stream::sensorId_t sensor_id, float value, float previ
 	{
 		case Sensor_Stream::SENSOR_1:
 			value = (2.0/3.0) * sqrt(value);
-			std::cout << "The adjusted value for sensor 1 is: " << value << "\n";
+//			std::cout << "The adjusted value for sensor 1 is: " << value << "\n";
 			break;
 		case Sensor_Stream::SENSOR_2:
 			value = value - previous_value;
-			std::cout << "The adjusted value for sensor 2 is: " << value << "\n";
+//			std::cout << "The adjusted value for sensor 2 is: " << value << "\n";
 			break;
 		case Sensor_Stream::SENSOR_3:
 			value = value;
-			std::cout << "The adjusted value for sensor 3 is: " << value << "\n";
+//			std::cout << "The adjusted value for sensor 3 is: " << value << "\n";
 			break;
 	}
 	return value;
@@ -104,15 +112,13 @@ float scale_data(Sensor_Stream::sensorId_t sensorid, float value)
 {
 	switch (sensorid) {
 		case Sensor_Stream::SENSOR_1:
-			
+			value = 2.7 * (value - 1);
 			break;
 		case Sensor_Stream::SENSOR_2:
-			
+			value = 0.7 * (value + 0.50);
 			break;
 		case Sensor_Stream::SENSOR_3:
-			
-			break;
-		default:
+			value = value - 0.2;
 			break;
 	}
 	return value;
