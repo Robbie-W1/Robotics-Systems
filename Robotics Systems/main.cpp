@@ -27,6 +27,10 @@ values_t sensor1;
 values_t sensor2;
 values_t sensor3;
 
+float motorA;
+float motorB;
+
+// try making objects outside of main
 
 int main(int argc, const char * argv[])
 {
@@ -45,6 +49,7 @@ int main(int argc, const char * argv[])
 	sensor1.value = Sensor1.get_data(&state1);
 	sensor2.value = Sensor2.get_data(&state2);
 	sensor3.value = Sensor3.get_data(&state3);
+	float fusedSensor;
 	
 	bool stream_ok = true;
 	while (stream_ok)
@@ -56,8 +61,8 @@ int main(int argc, const char * argv[])
 		switch (state1)
 		{
 			case Sensor_Stream::FLAG_DATA_GOOD: // if the data is good
-				std::cout << "The values of the sensors are \t" << sensor1.value << ",\t";
-				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
+//				std::cout << "The values of the sensors are \t" << sensor1.value << ",\t";
+//				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
 				sensor1.value = convert_data(Sensor_Stream::SENSOR_1, sensor1.value);
 				
 				sensor2.temporary_value = sensor2.value;
@@ -66,10 +71,34 @@ int main(int argc, const char * argv[])
 				
 				sensor3.value = convert_data(Sensor_Stream::SENSOR_3, sensor3.value);
 				
-				std::cout << "The adjusted values are: \t \t" << sensor1.value << "\t";
-				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
-				std::cout << "\n";
+//				std::cout << "The adjusted values are: \t \t" << sensor1.value << "\t";
+//				std::cout << sensor2.value << ",\t" << sensor3.value << "\n";
+//				std::cout << "\n";
+				
+				
+				sensor1.value = scale_data(Sensor_Stream::SENSOR_1, sensor1.value);
+				sensor2.value = scale_data(Sensor_Stream::SENSOR_2, sensor2.value);
+				sensor3.value = scale_data(Sensor_Stream::SENSOR_3, sensor3.value);
 
+				// sensor fusion
+				fusedSensor = ((3*(sensor1.value - sensor3.value)) / sensor2.value) - 3;
+//				std::cout << fusedSensor << "\n";
+				
+				motorA = fusedSensor;
+				
+				if (motorA > 1)
+				{
+					motorA = 1;
+				}
+				else if (motorA < -1)
+				{
+					motorA = -1;
+				}
+				
+				motorB = -1 * motorA;
+				
+				std::cout << motorA << "\t" << motorB << "\n";
+				
 				break;
 			case Sensor_Stream::FLAG_DATA_LINE_ERROR: // if we have errors in getting the data
 				std::cout << "Data line error \n";
@@ -94,15 +123,12 @@ float convert_data(Sensor_Stream::sensorId_t sensor_id, float value, float previ
 	{
 		case Sensor_Stream::SENSOR_1:
 			value = (2.0/3.0) * sqrt(value);
-//			std::cout << "The adjusted value for sensor 1 is: " << value << "\n";
 			break;
 		case Sensor_Stream::SENSOR_2:
 			value = value - previous_value;
-//			std::cout << "The adjusted value for sensor 2 is: " << value << "\n";
 			break;
 		case Sensor_Stream::SENSOR_3:
 			value = value;
-//			std::cout << "The adjusted value for sensor 3 is: " << value << "\n";
 			break;
 	}
 	return value;
