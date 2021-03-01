@@ -25,14 +25,17 @@ private:
 	struct values_t
 	{
 		float value;
-		float previous_value;
-		float temporary_value;
+		float previous_value = -1;
+		float temporary_value = 0;
 	};
 
 	
 public:
 	Sensors(Sensor_Stream *pSensor1Inject,Sensor_Stream *pSensor2Inject, Sensor_Stream *pSensor3Inject);
 	void get_data();
+	void convert_data();
+	void scale_data();
+	float fuse_data();
 	
 	values_t Sensor1;
 	values_t Sensor2;
