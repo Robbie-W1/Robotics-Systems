@@ -35,12 +35,18 @@ Sensor_Stream Sensor3(Sensor_Stream::SENSOR_3);
 //values_t sensor2;
 //values_t sensor3;
 
+float fused_value;
 float motorA;
 float motorB;
 
 
 Logger log_point_A(Logger::LOG_POINT_A, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
 Logger log_point_B(Logger::LOG_POINT_B, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
+
+Logger log_point_C(Logger::LOG_POINT_C, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
+Logger log_point_D(Logger::LOG_POINT_D, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
+Logger log_point_E(Logger::LOG_POINT_E, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
+Logger log_point_F(Logger::LOG_POINT_F, "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs");
 
 int main(int argc, const char * argv[])
 {
@@ -50,10 +56,18 @@ int main(int argc, const char * argv[])
 	std::cout << "Hello, World!\n";
 
 	Sensors.get_data();
+	
 	Sensors.convert_data();
 	log_point_A.log_value(Sensors.Sensor1.value);
 	log_point_B.log_value(Sensors.Sensor2.value);
+	
 	Sensors.scale_data();
+	log_point_C.log_value(Sensors.Sensor1.value);
+	log_point_D.log_value(Sensors.Sensor2.value);
+	log_point_E.log_value(Sensors.Sensor3.value);
+	
+	fused_value = Sensors.fuse_data();
+	log_point_F.log_value(fused_value);
 	std::cout << Sensors.fuse_data() << "\n";
 	
 	
