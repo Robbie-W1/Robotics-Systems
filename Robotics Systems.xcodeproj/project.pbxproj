@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D498A91725ED53AD00289D9C /* Sensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D498A91525ED53AD00289D9C /* Sensors.cpp */; };
 		D4A4EF2B25DD491300F34109 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A4EF2A25DD491300F34109 /* main.cpp */; };
+		D4CB783425E80BC200E1AD07 /* Sensor_Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4CB782E25E80BC200E1AD07 /* Sensor_Stream.cpp */; };
+		D4CB783525E80BC200E1AD07 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4CB782F25E80BC200E1AD07 /* Logger.cpp */; };
+		D4CB783625E80BC200E1AD07 /* Control_Output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4CB783325E80BC200E1AD07 /* Control_Output.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +27,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D492D45E25ED43280003E9B7 /* _StreamData */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _StreamData; sourceTree = "<group>"; };
+		D492D46125ED43820003E9B7 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Logs; path = "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs"; sourceTree = "<absolute>"; };
+		D498A91525ED53AD00289D9C /* Sensors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sensors.cpp; sourceTree = "<group>"; };
+		D498A91625ED53AD00289D9C /* Sensors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sensors.h; sourceTree = "<group>"; };
 		D4A4EF2725DD491300F34109 /* Robotics Systems */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Robotics Systems"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4A4EF2A25DD491300F34109 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D4CB782E25E80BC200E1AD07 /* Sensor_Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sensor_Stream.cpp; sourceTree = "<group>"; };
+		D4CB782F25E80BC200E1AD07 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		D4CB783025E80BC200E1AD07 /* Control_Output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Control_Output.h; sourceTree = "<group>"; };
+		D4CB783125E80BC200E1AD07 /* Sensor_Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sensor_Stream.h; sourceTree = "<group>"; };
+		D4CB783225E80BC200E1AD07 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		D4CB783325E80BC200E1AD07 /* Control_Output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Control_Output.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +72,16 @@
 			isa = PBXGroup;
 			children = (
 				D4A4EF2A25DD491300F34109 /* main.cpp */,
+				D498A91525ED53AD00289D9C /* Sensors.cpp */,
+				D498A91625ED53AD00289D9C /* Sensors.h */,
+				D4CB783325E80BC200E1AD07 /* Control_Output.cpp */,
+				D4CB783025E80BC200E1AD07 /* Control_Output.h */,
+				D4CB782F25E80BC200E1AD07 /* Logger.cpp */,
+				D4CB783225E80BC200E1AD07 /* Logger.h */,
+				D4CB782E25E80BC200E1AD07 /* Sensor_Stream.cpp */,
+				D4CB783125E80BC200E1AD07 /* Sensor_Stream.h */,
+				D492D45E25ED43280003E9B7 /* _StreamData */,
+				D492D46125ED43820003E9B7 /* Logs */,
 			);
 			path = "Robotics Systems";
 			sourceTree = "<group>";
@@ -119,7 +143,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D498A91725ED53AD00289D9C /* Sensors.cpp in Sources */,
+				D4CB783625E80BC200E1AD07 /* Control_Output.cpp in Sources */,
 				D4A4EF2B25DD491300F34109 /* main.cpp in Sources */,
+				D4CB783525E80BC200E1AD07 /* Logger.cpp in Sources */,
+				D4CB783425E80BC200E1AD07 /* Sensor_Stream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

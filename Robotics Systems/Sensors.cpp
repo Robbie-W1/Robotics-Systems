@@ -19,21 +19,19 @@ Sensors::Sensors(Sensor_Stream *pSensor1Inject,Sensor_Stream *pSensor2Inject, Se
 	pSensor3 = pSensor3Inject;
 };
 
-void Sensors::get_data()
+void Sensors::fetch_data()
 {
-	std::cout << "Fetching sensor data \n";
+//	std::cout << "Fetching sensor data \n";
 	
 	Sensor1.value = pSensor1->get_data(&state1);
 	Sensor2.value = pSensor2->get_data(&state2);
 	Sensor3.value = pSensor3->get_data(&state3);
 	
-	std::cout << state1 << "\t" << state2 << "\t" << state3 << "\n";
-	
 };
 
 void Sensors::convert_data()
 {
-	std::cout << "Converting sensor data \n";
+//	std::cout << "Converting sensor data \n";
 	
 	Sensor1.value = (2.0/3.0) * sqrt(Sensor1.value);
 	
@@ -41,13 +39,12 @@ void Sensors::convert_data()
 	Sensor2.value = Sensor2.value - Sensor2.previous_value;
 	Sensor2.previous_value = Sensor2.temporary_value;
 
-	Sensor3.value = Sensor3.value;
-	// sensor 3 does not need to be converted
+	Sensor3.value = Sensor3.value; // sensor 3 does not need to be converted
 }
 
 void Sensors::scale_data()
 {
-	std::cout << "Scaling sensor data \n";
+//	std::cout << "Scaling sensor data \n";
 	
 	Sensor1.value = 2.7 * (Sensor1.value - 1.0);
 	Sensor2.value = 0.7 * (Sensor2.value + 0.5);
@@ -68,7 +65,7 @@ float Sensors::return_value(Sensor_Stream::sensorId_t sensor_id)
 			return Sensor3.value;
 			break;
 		default:
-			std::cout << "Error \n";
+			std::cout << "Invalid sensor ID \n";
 			break;
 	}
 }
@@ -76,7 +73,58 @@ float Sensors::return_value(Sensor_Stream::sensorId_t sensor_id)
 
 float Sensors::fuse_data()
 {
-	std::cout << "Returning sensor data \n";
+//	std::cout << "Returning sensor data \n";
 	return ((3.0*(Sensor1.value - Sensor3.value)) / Sensor2.value) - 3.0;
 }
 
+
+void Sensors::get_states(Sensor_Stream::flagState_t *pState1In, Sensor_Stream::flagState_t *pState2In, Sensor_Stream::flagState_t *pState3In)
+{
+	*pState1In = state1;
+	*pState2In = state2;
+	*pState3In = state3;
+	
+	switch (state1)
+	{
+		case Sensor_Stream::FLAG_DATA_GOOD:
+			break;
+		case Sensor_Stream::FLAG_DATA_LINE_ERROR:
+			std::cout << "Sensor 1 line error \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_END:
+			std::cout << "Sensor 1 file end reached \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_CLOSED:
+			std::cout << "Sensor 1 stream not open \n";
+			break;
+	}
+	switch (state2)
+	{
+		case Sensor_Stream::FLAG_DATA_GOOD:
+			break;
+		case Sensor_Stream::FLAG_DATA_LINE_ERROR:
+			std::cout << "Sensor 2 line error \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_END:
+			std::cout << "Sensor 2 file end reached \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_CLOSED:
+			std::cout << "Sensor 2 stream not open \n";
+			break;
+	}
+	switch (state1)
+	{
+		case Sensor_Stream::FLAG_DATA_GOOD:
+			break;
+		case Sensor_Stream::FLAG_DATA_LINE_ERROR:
+			std::cout << "Sensor 2 line error \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_END:
+			std::cout << "Sensor 2 file end reached \n";
+			break;
+		case Sensor_Stream::FLAG_DATA_FILE_CLOSED:
+			std::cout << "Sensor 2 stream not open \n";
+			break;
+	}
+
+}
