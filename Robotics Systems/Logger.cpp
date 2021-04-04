@@ -9,7 +9,7 @@
 #include "Logger.h"
 
 // Internal Logger methods
-Logger::Logger(logType_t log_point) : Logger(log_point, "") {}
+Logger::Logger(logType_t log_point) : Logger(log_point, ".") {}
 
 Logger::Logger(logType_t log_point, const std::string &save_folder)
     : Logger_Base(_get_log_short_name(log_point), save_folder),
