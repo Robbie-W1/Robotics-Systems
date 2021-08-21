@@ -8,4 +8,5 @@ Code was written in Xcode, and so the Xcode project is included in this repo.
 
 The system architect is shown in the figure
 
-<img width="451" alt="image" src="https://user-images.githubusercontent.com/78490677/130333314-74cc0799-d994-4f2f-8ae2-dd8eedd96a70.png">
+![Picture 1](https://user-images.githubusercontent.com/78490677/130333393-d25b0ed8-ab01-4bd1-ac9e-3dd07d016c1b.jpg)
+
