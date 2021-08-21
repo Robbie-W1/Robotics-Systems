@@ -38,6 +38,7 @@ int main(int argc, const char * argv[])
 	enum Sensor_Stream::flagState_t sensorState3 = Sensor_Stream::FLAG_DATA_GOOD;
 
 	float fused_value;
+	float previous_fused_value = 0;
 	float motorA;
 	float motorB;
 	
@@ -74,7 +75,12 @@ int main(int argc, const char * argv[])
 		running = running && Loggers.log(Sensors.return_value(Sensor_Stream::SENSOR_3), Logger::LOG_POINT_E);
 
 		// fuse all of the sensor data and log it to point F
-		fused_value = Sensors.fuse_data();
+		
+		if (!Sensors.fuse_data(&fused_value))
+		{
+			fused_value = previous_fused_value;
+		}
+		
 		running = running && Loggers.log(fused_value, Logger::LOG_POINT_F);
 
 		motorA = fused_value;
@@ -87,6 +93,8 @@ int main(int argc, const char * argv[])
 		
 		
 		running = running && Loggers.log(motorA, motorB);
+		
+		previous_fused_value = fused_value;
 	}
 	return 0;
 }

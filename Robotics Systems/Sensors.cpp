@@ -64,10 +64,14 @@ float Sensors::return_value(Sensor_Stream::sensorId_t sensor_id)
 }
 
 
-float Sensors::fuse_data()
+float Sensors::fuse_data(float *fused_value)
 {
-//	std::cout << "Returning sensor data \n";
-	return ((3.0*(Sensor1.value - Sensor3.value)) / Sensor2.value) - 3.0;
+	if (Sensor2.value != 0)
+	{
+		*fused_value =  ((3.0*(Sensor1.value - Sensor3.value)) / Sensor2.value) - 3.0;
+		return true;
+	}
+	else return false;
 }
 
 

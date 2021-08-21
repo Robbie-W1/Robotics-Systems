@@ -87,9 +87,10 @@ public:
 	/**
 	 * Runs the sensor fusion equation on the sensor data and outputs the result of this equation
 	 *
+	 * @param fused_value a pointer to the variable storing the fused value of the sensors
 	 * @returns the output of the sensor fusion equation
 	 */
-	float fuse_data(); // runs the sensor fusion formula and outputs this value
+	float fuse_data(float *fused_value); // runs the sensor fusion formula and outputs this value
 	
 	/**
 	 * Uses pointers to get the states of all three sensor streams (pointers are used because a function can only return one value in C++)
