@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D42A92042614A8CE006AF3C2 /* Loggers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42A92022614A8CE006AF3C2 /* Loggers.cpp */; };
 		D498A91725ED53AD00289D9C /* Sensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D498A91525ED53AD00289D9C /* Sensors.cpp */; };
 		D4A4EF2B25DD491300F34109 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4A4EF2A25DD491300F34109 /* main.cpp */; };
 		D4CB783425E80BC200E1AD07 /* Sensor_Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4CB782E25E80BC200E1AD07 /* Sensor_Stream.cpp */; };
@@ -27,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D42A92022614A8CE006AF3C2 /* Loggers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Loggers.cpp; sourceTree = "<group>"; };
+		D42A92032614A8CE006AF3C2 /* Loggers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Loggers.h; sourceTree = "<group>"; };
 		D492D45E25ED43280003E9B7 /* _StreamData */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _StreamData; sourceTree = "<group>"; };
 		D492D46125ED43820003E9B7 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Logs; path = "/Users/robbiewoolterton/Documents/GitHub/Robotics Systems/Robotics Systems/Logs"; sourceTree = "<absolute>"; };
 		D498A91525ED53AD00289D9C /* Sensors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sensors.cpp; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				D4A4EF2A25DD491300F34109 /* main.cpp */,
+				D42A92022614A8CE006AF3C2 /* Loggers.cpp */,
+				D42A92032614A8CE006AF3C2 /* Loggers.h */,
 				D498A91525ED53AD00289D9C /* Sensors.cpp */,
 				D498A91625ED53AD00289D9C /* Sensors.h */,
 				D4CB783325E80BC200E1AD07 /* Control_Output.cpp */,
@@ -144,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D498A91725ED53AD00289D9C /* Sensors.cpp in Sources */,
+				D42A92042614A8CE006AF3C2 /* Loggers.cpp in Sources */,
 				D4CB783625E80BC200E1AD07 /* Control_Output.cpp in Sources */,
 				D4A4EF2B25DD491300F34109 /* main.cpp in Sources */,
 				D4CB783525E80BC200E1AD07 /* Logger.cpp in Sources */,
